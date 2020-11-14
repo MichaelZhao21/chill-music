@@ -6,7 +6,9 @@
   "author": "Michael Zhao <michaelzhao314@gmail.com> (https://michaelzhao.xyz)",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^12.4.1"
+    "discord.js": "^12.4.1",
+    "opusscript": "^0.0.7",
+    "ytdl-core": "^4.0.4"
   },
   "scripts": {
     "start": "node app.js"
