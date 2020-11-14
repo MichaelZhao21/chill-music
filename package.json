@@ -1,0 +1,11 @@
+{
+  "name": "chill-music",
+  "version": "1.0.0",
+  "description": "Literally just plays chill music",
+  "main": "index.js",
+  "author": "Michael Zhao <michaelzhao314@gmail.com> (https://michaelzhao.xyz)",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.4.1"
+  }
+}
