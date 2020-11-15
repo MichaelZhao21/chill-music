@@ -7,6 +7,7 @@ var connectionList = {};
 
 client.on('ready', () => {
     console.log(`Ready! Logged in as ${client.user.tag}`);
+    client.user.setActivity('Listening to !help');
 });
 
 client.on('message', (message) => {
@@ -41,7 +42,7 @@ function helpCommand(message) {
         .setColor('#65cdf1')
         .setTitle('Chill Music Commands')
         .setDescription(
-            'help - Prints this message\nplay - Plays the song\nstop - Stops the song and leaves\ntime - Displays listening time'
+            '!help - Prints this message\n!play - Plays the song\n!stop - Stops the song and leaves\n!time - Displays listening time'
         );
     message.channel.send(embed);
 }
