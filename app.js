@@ -153,7 +153,6 @@ function formatTimeChange(id) {
     diff %= 60000;
     var secs = Math.floor(diff / 1000);
     var ms = diff % 1000;
-    console.log(hours);
     return `${pad(hours, 2)}:${pad(mins, 2)}:${pad(secs, 2)}.${pad(ms, 3)}`;
 }
 
