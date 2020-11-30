@@ -34,7 +34,6 @@ client.login(config.token);
 
 /**
  * Prints out the help message to the user
- *
  * @param {Discord.Message} message the Discord message object
  */
 function helpCommand(message) {
@@ -49,7 +48,6 @@ function helpCommand(message) {
 
 /**
  * Plays the song!
- *
  * @param {Discord.Message} message the Discord message object
  */
 async function playCommand(message) {
@@ -88,7 +86,6 @@ async function playCommand(message) {
 
 /**
  * Starts playing a song, downloading it from yt
- *
  * @param {string} id the current guild id
  */
 function startSong(id) {
@@ -107,7 +104,6 @@ function startSong(id) {
 
 /**
  * Stops the song and leaves the VC
- *
  * @param {Discord.Message} message the Discord message object
  */
 async function stopCommand(message) {
@@ -126,7 +122,6 @@ async function stopCommand(message) {
 
 /**
  * Displays the time the user has spent listening to the song
- *
  * @param {Discord.Message} message the Discord message object
  */
 async function timeCommand(message) {
@@ -137,7 +132,9 @@ async function timeCommand(message) {
     }
 
     // Print time message
-    message.channel.send("You've been listening to music for: " + formatTimeChange(message.guild.id));
+    message.channel.send(
+        "You've been listening to music for: " + formatTimeChange(message.guild.id)
+    );
 }
 
 /**
