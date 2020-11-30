@@ -91,9 +91,6 @@ async function playCommand(message) {
 function startSong(id) {
     if (!connectionList.has(id)) return;
 
-    console.log(config.url);
-    console.log(id);
-    console.log(connectionList.get(id));
     const dispatcher = connectionList.get(id).connection
         .play(ytdl(config.url))
         .on('finish', () => {
