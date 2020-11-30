@@ -3,7 +3,7 @@ const ytdl = require('ytdl-core');
 const client = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
 const config = require('./config.json');
 
-var connectionList = {};
+var connectionList = new Map();
 
 client.on('ready', () => {
     console.log(`Ready! Logged in as ${client.user.tag}`);
@@ -66,7 +66,7 @@ async function playCommand(message) {
     }
 
     // Check if already playing
-    if (connectionList[message.guild.id]) {
+    if (connectionList.has(message.guild.id)) {
         message.channel.send('Already playing music!');
         return;
     }
@@ -75,12 +75,12 @@ async function playCommand(message) {
     // Also add a connection object to the list for the current guild id
     try {
         var currConnection = await vc.join();
-        connectionList[message.guild.id] = new Connection(message.channel, vc, currConnection);
+        connectionList.set(message.guild.id, new Connection(message.channel, vc, currConnection));
         startSong(message.guild.id);
         message.channel.send('Started playing music :DD');
     } catch (err) {
         message.channel.send('Error playing song!');
-        if (connectionList[message.guild.id]) delete connectionList[message.guild.id];
+        connectionList.delete(message.guild.id);
     }
 }
 
@@ -89,15 +89,18 @@ async function playCommand(message) {
  * @param {string} id the current guild id
  */
 function startSong(id) {
-    if (!connectionList[id]) return;
+    if (!connectionList.has(id)) return;
 
-    const dispatcher = connectionList[id].connection
+    console.log(config.url);
+    console.log(id);
+    console.log(connectionList.get(id));
+    const dispatcher = connectionList.get(id).connection
         .play(ytdl(config.url))
         .on('finish', () => {
             startSong(id);
         })
         .on('error', (error) => {
-            message.channel.send('Error playing: ' + error);
+            connectionList.get(id).tc.send('Error playing: ' + error);
         });
     dispatcher.setVolumeLogarithmic(1); // TODO: Maybe change this?
 }
@@ -108,16 +111,16 @@ function startSong(id) {
  */
 async function stopCommand(message) {
     // Check if not playing
-    if (!connectionList[message.guild.id]) {
+    if (!connectionList.has(message.guild.id)) {
         message.channel.send('Not currently playing music! Use the `play` command to start music.');
         return;
     }
 
     // Disconnect and stop music
-    connectionList[message.guild.id].connection.dispatcher.end();
-    connectionList[message.guild.id].vc.leave();
+    connectionList.get(message.guild.id).connection.dispatcher.end();
+    connectionList.get(message.guild.id).vc.leave();
     message.channel.send('Stopped music! Play time: ' + formatTimeChange(message.guild.id));
-    delete connectionList[message.guild.id];
+    connectionList.delete(message.guild.id);
 }
 
 /**
@@ -126,7 +129,7 @@ async function stopCommand(message) {
  */
 async function timeCommand(message) {
     // Check if not playing
-    if (!connectionList[message.guild.id]) {
+    if (!connectionList.has(message.guild.id)) {
         message.channel.send('Not currently playing music! Use the `play` command to start music.');
         return;
     }
@@ -143,7 +146,7 @@ async function timeCommand(message) {
  * @returns {string} A formatted time string (00:00:00.000)
  */
 function formatTimeChange(id) {
-    var diff = new Date().getTime() - connectionList[id].startTime;
+    var diff = new Date().getTime() - connectionList.get(id).startTime;
     var hours = Math.floor(diff / 3600000);
     diff %= 3600000;
     var mins = Math.floor(diff / 60000);
