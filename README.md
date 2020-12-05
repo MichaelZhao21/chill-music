@@ -20,4 +20,4 @@ Simply type `yarn start`
 
 ## Song suggestions
 
-- [4 Hours of Ambient Study Music To Concentrate](https://www.youtube.com/watch?v=4GnVDPD01as&ab_channel=QuietQuest-StudyMusic)
+- [4 Hours of Ambient Study Music To Concentrate](https://www.youtube.com/watch?v=4GnVDPD01as)
