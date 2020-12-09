@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const ytdl = require('ytdl-core');
 const client = new Discord.Client({ ws: { intents: Discord.Intents.ALL } });
 const config = require('./config.json');
 
@@ -92,7 +91,7 @@ function startSong(id) {
     if (!connectionList.has(id)) return;
 
     const dispatcher = connectionList.get(id).connection
-        .play(ytdl(config.url))
+        .play("music.mp3")
         .on('finish', () => {
             startSong(id);
         })

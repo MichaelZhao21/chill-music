@@ -10,9 +10,10 @@ Create a file called `config.json` and add the following:
 {
     "token": "[discord bot token]",
     "prefix": "[prefix for bot commands (ie. '!')]",
-    "url": "[the youtube link for the song you want to play]"
 }
 ```
+
+Add a file named `music.mp3` to play on repeat (music won't play if this file doesn't exist!)
 
 ## Running
 
